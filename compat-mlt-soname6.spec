@@ -4,13 +4,12 @@
 #
 Name     : compat-mlt-soname6
 Version  : 6.26.1
-Release  : 18
+Release  : 19
 URL      : https://github.com/mltframework/mlt/releases/download/v6.26.1/mlt-6.26.1.tar.gz
 Source0  : https://github.com/mltframework/mlt/releases/download/v6.26.1/mlt-6.26.1.tar.gz
 Summary  : MLT multimedia framework
 Group    : Development/Tools
 License  : LGPL-2.1 MIT
-Requires: compat-mlt-soname6-bin = %{version}-%{release}
 Requires: compat-mlt-soname6-data = %{version}-%{release}
 Requires: compat-mlt-soname6-lib = %{version}-%{release}
 Requires: compat-mlt-soname6-license = %{version}-%{release}
@@ -34,16 +33,6 @@ BuildRequires : sox-dev
 Written by Charles Yates <charles.yates@pandora.be>
 and Dan Dennedy <dan@dennedy.org>
 
-%package bin
-Summary: bin components for the compat-mlt-soname6 package.
-Group: Binaries
-Requires: compat-mlt-soname6-data = %{version}-%{release}
-Requires: compat-mlt-soname6-license = %{version}-%{release}
-
-%description bin
-bin components for the compat-mlt-soname6 package.
-
-
 %package data
 Summary: data components for the compat-mlt-soname6 package.
 Group: Data
@@ -56,7 +45,6 @@ data components for the compat-mlt-soname6 package.
 Summary: dev components for the compat-mlt-soname6 package.
 Group: Development
 Requires: compat-mlt-soname6-lib = %{version}-%{release}
-Requires: compat-mlt-soname6-bin = %{version}-%{release}
 Requires: compat-mlt-soname6-data = %{version}-%{release}
 Provides: compat-mlt-soname6-devel = %{version}-%{release}
 Requires: compat-mlt-soname6 = %{version}-%{release}
@@ -92,7 +80,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1623169020
+export SOURCE_DATE_EPOCH=1623169366
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
@@ -103,19 +91,17 @@ export CXXFLAGS="$CXXFLAGS -fno-lto "
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1623169020
+export SOURCE_DATE_EPOCH=1623169366
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/compat-mlt-soname6
 cp %{_builddir}/mlt-6.26.1/COPYING %{buildroot}/usr/share/package-licenses/compat-mlt-soname6/3704f4680301a60004b20f94e0b5b8c7ff1484a9
 cp %{_builddir}/mlt-6.26.1/src/modules/plus/ebur128/COPYING %{buildroot}/usr/share/package-licenses/compat-mlt-soname6/2627ff03833f74ed51a7f43c55d30b249b6a0707
 %make_install
+## Remove excluded files
+rm -f %{buildroot}/usr/bin/melt
 
 %files
 %defattr(-,root,root,-)
-
-%files bin
-%defattr(-,root,root,-)
-/usr/bin/melt
 
 %files data
 %defattr(-,root,root,-)
